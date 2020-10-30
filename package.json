@@ -1,0 +1,43 @@
+{
+  "name": "@bitwave/bitwave-cli",
+  "version": "0.1.0",
+  "description": "A CLI interface for [bitwave.tv] chat and other services",
+  "main": "build/index.js",
+  "scripts": {
+    "run": "node build/index.js",
+    "build": "tsc",
+    "watch": "tsc -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bitwave-tv/bitwave-cli.git"
+  },
+  "keywords": [
+    "bitwave",
+    "cli",
+    "chat",
+    "api"
+  ],
+  "author": {
+    "name": "dvdrw",
+    "email": "dvdrw@bitwave.tv",
+    "url": "https://bitwave.tv/"
+  },
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/bitwave-tv/bitwave-cli/issues"
+  },
+  "homepage": "https://github.com/bitwave-tv/bitwave-cli#readme",
+  "dependencies": {
+    "@bitwave/chat-client": "^0.3.8",
+    "axios": "^0.21.0",
+    "chalk": "^4.1.0",
+    "form-data": "^3.0.0",
+    "mime": "^2.4.6",
+    "prompt-sync": "^4.2.0",
+    "prompt-sync-history": "^1.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.6"
+  }
+}
