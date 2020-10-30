@@ -4,7 +4,6 @@ const common = require("../common");
 const FormData = require("form-data")
 
 const chalk = require("chalk");
-const mime = require("mime");
 const axios = require("axios");
 
 const upload = async (filepath: string, cb: Function) : Promise<void> => {
@@ -17,8 +16,6 @@ const upload = async (filepath: string, cb: Function) : Promise<void> => {
         common.print(chalk.red("ERROR: ") + `'${chalk.bgBlueBright(filepath)}' isn't a file\n`);
         return;
     }
-
-    const filedata = fs.readFileSync(filepath).toString("base64");
     const postData = new FormData();
     postData.append("upload", fs.createReadStream(filepath));
 

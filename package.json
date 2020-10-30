@@ -33,7 +33,6 @@
     "axios": "^0.21.0",
     "chalk": "^4.1.0",
     "form-data": "^3.0.0",
-    "mime": "^2.4.6",
     "prompt-sync": "^4.2.0",
     "prompt-sync-history": "^1.0.1"
   },
