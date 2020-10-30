@@ -1,4 +1,6 @@
+const os = require('os');
 const fs = require('fs');
+const path = require('path');
 
 module.exports = {
     pwd() : String {
@@ -16,4 +18,10 @@ module.exports = {
     print(s) : void {
         process.stdout.write(s);
     },
+
+    resolvePath(s : String) : string {
+        const homedir = os.homedir();
+        s = homedir ? s.replace(/^~(?=$|\/|\\)/, homedir) : s;
+        return path.resolve(s);
+    }
 };

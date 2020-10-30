@@ -6,11 +6,13 @@ const FormData = require("form-data")
 const chalk = require("chalk");
 const axios = require("axios");
 
-const upload = async (filepath: string, cb: Function) : Promise<void> => {
+const upload = async (filepath: string) : Promise<void> => {
     if(!filepath) {
         common.print(chalk.red("ERROR: ") + `No filepath entered\n`);
         return;
     }
+
+    filepath = common.resolvePath(filepath);
 
     if(!common.isFile(filepath)) {
         common.print(chalk.red("ERROR: ") + `'${chalk.bgBlueBright(filepath)}' isn't a file\n`);
