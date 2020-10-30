@@ -7,12 +7,16 @@ module.exports = {
         return process.cwd();
     },
 
-    dirExists(filePath : String) : Boolean {
+    exists(filePath : String) : Boolean {
         return fs.existsSync(filePath);
     },
 
+    isDir(filePath : String) : Boolean {
+        return this.exists(filePath) && fs.lstatSync(filePath).isDirectory();
+    },
+
     isFile(filePath : String) : Boolean {
-        return fs.existsSync(filePath) && !fs.lstatSync(filePath).isDirectory();
+        return this.exists(filePath) && !fs.lstatSync(filePath).isDirectory();
     },
 
     print(s) : void {

@@ -6,6 +6,8 @@ const prompt =
         eot: true,
     });
 
+const {execSync} = require('child_process');
+
 const common = require('./lib/common');
 
 const builtins = require('./lib/builtins');
@@ -20,14 +22,16 @@ const welcomeMessage = () : void => {
     );
 };
 
-const promptString: String = chalk.blue(`${common.pwd()}`) + "> ";
+const promptString: Function = () => chalk.blue(`${common.pwd()}`) + "> ";
 
 const main = async () => {
-    let exit: boolean = false;
+    let shouldExit: boolean = false;
 
     welcomeMessage();
-    while (!exit) {
-        const str: String = prompt(promptString, "") ?? ' ';
+    while (!shouldExit) {
+        const str: String = prompt(promptString(), "");
+        if(!str) continue;
+
         const tokens: Array<String> = str
             .split(' ')   // split command at each space
             .filter(t => t.length); // used to remove extra spaces
@@ -36,8 +40,18 @@ const main = async () => {
         const f = builtins.functions.get(command);
         if (f) {
             const r = await f(...tokens);
-            if (typeof r === "boolean") exit = r;
-            else exit = false;
+            if (typeof r === "boolean") shouldExit = r;
+            else shouldExit = false;
+        } else {
+            const execstr: String = tokens.reduce( (x, acc) => x + " " + acc, command );
+            try {
+                execSync(execstr, {
+                    stdio: [process.stdin, process.stdout, process.stderr],
+                    windowsHide: true
+                });
+            } catch (e) {
+                //common.print(chalk.red("ERROR: ") + e + '\n');
+            }
         }
     }
 }

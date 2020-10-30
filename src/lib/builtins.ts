@@ -1,5 +1,5 @@
 const scripts = require('./scripts');
-const printout = require('./common').print;
+const common = require('./common');
 
 const functions = new Map<String, Function>();
 const descriptions = new Map<String, String>();
@@ -12,9 +12,33 @@ const data = [
         (): void => {
             const names: Array<String> = Array.from(functions.keys());
             for (let name of names) {
-                printout(chalk.whiteBright(name) + ` - ${chalk.gray(descriptions.get(name))}\n`);
+                common.print(chalk.whiteBright(name) + ` - ${chalk.gray(descriptions.get(name))}\n`);
             }
         }
+    ],
+    [
+        "cd",
+        "Changes current directory",
+        path => {
+            if(!path) {
+                common.print(chalk.red("ERROR: ") + `No filepath entered\n`);
+                return;
+            }
+
+            if(common.exists(path)) path = common.resolvePath(path);
+
+            if(!common.isDir(path)) {
+                common.print(chalk.red("ERROR: ") + `'${chalk.bgBlueBright(path)}' isn't a directory\n`);
+                return;
+            }
+
+            process.chdir(path);
+        }
+    ],
+    [
+        "pwd",
+        "Print working directory",
+        () => console.log(common.pwd())
     ],
     [
         "exit",
