@@ -27,7 +27,7 @@ const upload = async (filepath: string) : Promise<void> => {
     console.log(r.data);
 };
 
-module.exports = [
+export = [
     "upload",
     "Uploads an image to the [bitwave.tv] CDN",
     upload,

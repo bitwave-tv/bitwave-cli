@@ -1,3 +1,4 @@
-module.exports = [
+export = [
     require("./scripts/upload"),
+    require("./scripts/chat"),
 ];

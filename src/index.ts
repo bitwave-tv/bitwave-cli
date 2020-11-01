@@ -30,6 +30,7 @@ const main = async () => {
     welcomeMessage();
     while (!shouldExit) {
         const str: String = prompt(promptString(), "");
+        prompt.history.save();
         if(!str) continue;
 
         const tokens: Array<String> = str
@@ -56,6 +57,6 @@ const main = async () => {
     }
 }
 
-main().then();
+main().then(r => process.exit(0));
 
 export {}

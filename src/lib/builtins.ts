@@ -53,7 +53,7 @@ data.forEach(([name, desc, func]) => {
     descriptions.set(name, desc);
 });
 
-module.exports = {
+export = {
     functions: functions,
     descriptions: descriptions,
 };
