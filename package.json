@@ -29,13 +29,13 @@
   },
   "homepage": "https://github.com/bitwave-tv/bitwave-cli#readme",
   "dependencies": {
-    "@bitwave/chat-client": "^0.3.8",
+    "@bitwave/chat-client": "^1.0.0-0",
     "axios": "^0.21.0",
+    "blessed": "^0.1.81",
     "chalk": "^4.1.0",
     "form-data": "^3.0.0",
     "prompt-sync": "^4.2.0",
     "prompt-sync-history": "^1.0.1",
-    "terminal-kit": "^1.44.0",
     "turndown": "^7.0.0"
   },
   "devDependencies": {
