@@ -91,6 +91,7 @@ async function chat(...args: string[]): Promise<void> {
         common.print(
             `${chalk.blueBright("Usage")}: chat ${chalk.gray("[-t token] [-L user:pass] [-lg]")} channel\n` +
             `${chalk.gray("where")} channel ${chalk.gray("is the channel name to connect to.\n")}` +
+            `  -h, --help                 display this help message\n` +
             `  -t, --token                auth using given chat token\n` +
             `  -T, --tokenFile            auth using chat token read from file\n` +
             `  -L, --login <user:pass>    auth using user/pass (not implemented)\n` +

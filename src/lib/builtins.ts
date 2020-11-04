@@ -57,6 +57,10 @@ const data = [
         "set",
         "Sets key to value in the global environment",
         (key, ...rest): void => {
+            if(!rest.length) {
+                delete env[key];
+                return;
+            }
             try {
                 env[key] = JSON.parse(common.unspread(rest));
             } catch (e) {
