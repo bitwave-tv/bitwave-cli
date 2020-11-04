@@ -1,5 +1,6 @@
 import scripts = require('./scripts');
 import common = require('./common');
+const env = require('../env/global').env;
 
 const functions = new Map<String, Function>();
 const descriptions = new Map<String, String>();
@@ -50,6 +51,29 @@ const data = [
         "Evaluates a JS expression.",
         (...args): void => {
             eval(common.unspread(args));
+        }
+    ],
+    [
+        "set",
+        "Sets key to value in the global environment",
+        (key, ...rest): void => {
+            try {
+                env[key] = JSON.parse(common.unspread(rest));
+            } catch (e) {
+                common.print(chalk.red("ERR: Couldn't set value:\n"));
+                console.error(e);
+            }
+        }
+    ],
+    [
+        "env",
+        "Lists all values in the global environment, or a particular one",
+        (key?: string): void => {
+            if(key) {
+                console.log(key, ":", env[key]);
+                return;
+            }
+            console.log(env);
         }
     ],
     ...scripts
