@@ -1,6 +1,6 @@
-const os = require('os');
-const fs = require('fs');
-const path = require('path');
+import os = require('os');
+import fs = require('fs');
+import path = require('path');
 
 type Maybe<A> = A | void;
 
@@ -45,4 +45,8 @@ export = {
             else return undefined;
         }
     },
+
+    unspread(args: string[]): string {
+        return args.reduce((a ,b) => a + " " + b, "");
+    }
 };

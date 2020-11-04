@@ -1,10 +1,10 @@
-const scripts = require('./scripts');
-const common = require('./common');
+import scripts = require('./scripts');
+import common = require('./common');
 
 const functions = new Map<String, Function>();
 const descriptions = new Map<String, String>();
 
-let chalk = require('chalk');
+import chalk = require('chalk');
 const data = [
     [
         "help",
@@ -44,6 +44,13 @@ const data = [
         "exit",
         "Exits the shell",
         (): Boolean => true,
+    ],
+    [
+        "eval",
+        "Evaluates a JS expression.",
+        (...args): void => {
+            eval(common.unspread(args));
+        }
     ],
     ...scripts
 ];

@@ -1,5 +1,5 @@
 // portable TTY colours
-const chalk = require('chalk');
+import chalk = require('chalk');
 const prompt =
     require('prompt-sync')({
         history: require('prompt-sync-history')('/tmp/bitwavecli.tmp', 100),

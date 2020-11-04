@@ -1,3 +1,5 @@
+import common = require('../../common');
+
 export type Recipient = string;
 export interface Action {
     shouldHydrate?: any;
@@ -58,7 +60,7 @@ const createFunctions = () => ({
     },
 
     whisper(who: string, ...rest: string[]): Action[] {
-        const message = rest.reduce((x, y) => x + " " + y, "");
+        const message = common.unspread(rest);
         return [
             { whisper: [normalizeUsername(who), message] }
         ];

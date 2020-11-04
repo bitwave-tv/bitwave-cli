@@ -1,9 +1,9 @@
 import * as fs from "fs";
 
-const common = require("../common");
-const FormData = require("form-data")
+import common = require("../common");
+import FormData = require("form-data")
 
-const chalk = require("chalk");
+import chalk = require("chalk");
 const axios = require("axios");
 
 const upload = async (filepath: string) : Promise<void> => {

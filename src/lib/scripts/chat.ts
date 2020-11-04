@@ -1,7 +1,7 @@
 import {promisify} from "util";
 
-const blessed = require('blessed');
-const chalk = require('chalk');
+import blessed = require('blessed');
+import chalk = require('chalk');
 
 import { BitwaveChat, Message } from '@bitwave/chat-client';
 const bwchat = new BitwaveChat(false);
