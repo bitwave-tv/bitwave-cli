@@ -56,13 +56,14 @@ const data = [
     [
         "set",
         "Sets key to value in the global environment",
-        (key, ...rest): void => {
-            if(!rest.length) {
+        (key, value): void => {
+            if(!value) {
                 delete env[key];
                 return;
             }
+
             try {
-                env[key] = JSON.parse(common.unspread(rest));
+                env[key] = JSON.parse(value);
             } catch (e) {
                 common.print(chalk.red("ERR: Couldn't set value:\n"));
                 console.error(e);

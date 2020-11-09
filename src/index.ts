@@ -24,39 +24,64 @@ const welcomeMessage = () : void => {
 
 const promptString: Function = () => chalk.blue(`${common.pwd()}`) + "> ";
 
+function parse(args: string[]): string[] {
+    const stringLiteral = /^"[^"]*"(\s+|\s?$)/;
+    const token = /^[^\s"]+(\s+|\s?$)/;
+
+    const tokens = [];
+
+    let stream: string = common.unspread(args);
+    while(stream.length) {
+        if(token.test(stream)) {
+            tokens.push(token.exec(stream)[0].trimEnd());
+            stream = stream.replace(token, "");
+        } else if(stringLiteral.test(stream)) {
+            const data = stringLiteral.exec(stream)[0].trimEnd();
+            tokens.push(data.replace(new RegExp('"', 'g'), ""));
+            stream = stream.replace(stringLiteral, "");
+        } else {
+            throw SyntaxError("Could not parse input. Did you close all quotes?");
+        }
+    }
+
+    return tokens;
+}
+
 const main = async () => {
     let shouldExit: boolean = false;
 
     welcomeMessage();
     while (!shouldExit) {
-        const str: String = prompt(promptString(), "");
+        const str: string = prompt(promptString(), "");
         prompt.history.save();
         if(!str) continue;
 
-        const tokens: Array<String> = str
+        let tokens: Array<string> = str
             .split(' ')   // split command at each space
             .filter(t => t.length); // used to remove extra spaces
-        const command: String = tokens.shift();
+        //const command: string = tokens.shift();
 
-        const f = builtins.functions.get(command);
-        if (f) {
-            const r = await f(...tokens);
-            if (typeof r === "boolean") shouldExit = r;
-            else shouldExit = false;
-        } else {
-            const execstr: String = tokens.reduce( (x, acc) => x + " " + acc, command );
-            try {
+        try {
+            tokens = parse(tokens);
+            const command = tokens.shift();
+            const f = builtins.functions.get(command);
+            if (f) {
+                const r = await f(...tokens);
+                if (typeof r === "boolean") shouldExit = r;
+                else shouldExit = false;
+            } else {
+                const execstr: string = tokens.reduce((acc, x) => acc + " " + x, command);
                 execSync(execstr, {
                     stdio: [process.stdin, process.stdout, process.stderr],
                     windowsHide: true
                 });
-            } catch (e) {
-                //common.print(chalk.red("ERROR: ") + e + '\n');
             }
+        } catch(e) {
+            common.print(chalk.red("ERR: ") + e.message + "\n");
         }
     }
 }
 
-main().then(r => process.exit(0));
+main().then(() => process.exit(0));
 
 export {}

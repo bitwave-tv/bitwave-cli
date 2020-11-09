@@ -47,6 +47,6 @@ export = {
     },
 
     unspread(args: string[]): string {
-        return args.reduce((a ,b) => a + " " + b, "");
+        return args.reduce((a ,b) => a + " " + b, "").substring(1);
     }
 };
