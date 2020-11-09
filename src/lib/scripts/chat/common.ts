@@ -1,7 +1,7 @@
 export type Maybe<A> = A | void;
 export type TokenString = string;
 
-import TurndownService = require('turndown');
+const TurndownService = require('turndown').default;
 import type { Message } from '@bitwave/chat-client';
 const turndown = new TurndownService({
     headingStyle: 'atx',

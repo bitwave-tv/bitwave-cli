@@ -1,0 +1,54 @@
+diff --git a/node_modules/blessed/lib/widgets/terminal.js b/node_modules/blessed/lib/widgets/terminal.js
+index 3ed1bbe..99d849d 100644
+--- a/node_modules/blessed/lib/widgets/terminal.js
++++ b/node_modules/blessed/lib/widgets/terminal.js
+@@ -90,17 +90,17 @@ Terminal.prototype.bootstrap = function() {
+   element.parentNode = element;
+   element.offsetParent = element;
+ 
+-  this.term = require('term.js')({
+-    termName: this.termName,
+-    cols: this.width - this.iwidth,
+-    rows: this.height - this.iheight,
+-    context: element,
+-    document: element,
+-    body: element,
+-    parent: element,
+-    cursorBlink: this.cursorBlink,
+-    screenKeys: this.screenKeys
+-  });
++  // this.term = require('term.js')({
++  //   termName: this.termName,
++  //   cols: this.width - this.iwidth,
++  //   rows: this.height - this.iheight,
++  //   context: element,
++  //   document: element,
++  //   body: element,
++  //   parent: element,
++  //   cursorBlink: this.cursorBlink,
++  //   screenKeys: this.screenKeys
++  // });
+ 
+   this.term.refresh = function() {
+     self.screen.render();
+@@ -215,13 +215,13 @@ Terminal.prototype.bootstrap = function() {
+     return;
+   }
+ 
+-  this.pty = require('pty.js').fork(this.shell, this.args, {
+-    name: this.termName,
+-    cols: this.width - this.iwidth,
+-    rows: this.height - this.iheight,
+-    cwd: process.env.HOME,
+-    env: this.options.env || process.env
+-  });
++  // this.pty = require('pty.js').fork(this.shell, this.args, {
++  //   name: this.termName,
++  //   cols: this.width - this.iwidth,
++  //   rows: this.height - this.iheight,
++  //   cwd: process.env.HOME,
++  //   env: this.options.env || process.env
++  // });
+ 
+   this.on('resize', function() {
+     nextTick(function() {

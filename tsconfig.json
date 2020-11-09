@@ -9,7 +9,6 @@
     "target": "es5",
     "resolveJsonModule": true,
     "sourceMap": true,
-    "outDir": "build",
     "sourceRoot": "src"
   },
   "exclude": [
