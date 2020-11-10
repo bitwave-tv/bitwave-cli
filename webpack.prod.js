@@ -5,7 +5,11 @@ const TerserPlugin = require('terser-webpack-plugin');
 module.exports = merge(common, {
     mode: "production",
     optimization: {
-        minimizer: [new TerserPlugin()],
+        minimizer: [new TerserPlugin({
+            terserOptions: {
+                keep_fnames: /^(HTML|SVG)/
+            },
+        })],
 
         splitChunks: {
             cacheGroups: {
