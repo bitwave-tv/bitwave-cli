@@ -62,8 +62,15 @@ const data = [
                 return;
             }
 
+            let parsedVal;
             try {
-                env[key] = JSON.parse(value);
+                parsedVal = JSON.parse(value);
+            } catch {
+                parsedVal = JSON.stringify(value);
+            }
+
+            try {
+                env[key] = parsedVal;
             } catch (e) {
                 common.print(chalk.red("ERR: Couldn't set value:\n"));
                 console.error(e);

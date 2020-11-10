@@ -24,24 +24,24 @@ const welcomeMessage = () : void => {
 
 const promptString: Function = () => chalk.blue(`${common.pwd()}`) + "> ";
 
-function parse(args: string[]): string[] {
-    const stringLiteral = /^"[^"]*"(\s+|\s?$)/;
-    const token = /^[^\s"]+(\s+|\s?$)/;
+function parse(stream: string): string[] {
+    const stringLiteral = /^(["'])(.*?)\1/;
+    const token = /^[^\s"']+/;
 
     const tokens = [];
 
-    let stream: string = common.unspread(args);
+    stream = stream.trimStart();
     while(stream.length) {
         if(token.test(stream)) {
-            tokens.push(token.exec(stream)[0].trimEnd());
+            tokens.push(token.exec(stream)[0]);
             stream = stream.replace(token, "");
         } else if(stringLiteral.test(stream)) {
-            const data = stringLiteral.exec(stream)[0].trimEnd();
-            tokens.push(data.replace(new RegExp('"', 'g'), ""));
+            tokens.push(stringLiteral.exec(stream)[2]);
             stream = stream.replace(stringLiteral, "");
         } else {
             throw SyntaxError("Could not parse input. Did you close all quotes?");
         }
+        stream = stream.trimStart();
     }
 
     return tokens;
@@ -56,20 +56,15 @@ const main = async () => {
         prompt.history.save();
         if(!str) continue;
 
-        let tokens: Array<string> = str
-            .split(' ')   // split command at each space
-            .filter(t => t.length); // used to remove extra spaces
-        //const command: string = tokens.shift();
-
         try {
-            tokens = parse(tokens);
+            let tokens: Array<string> = parse(str);
             const command = tokens.shift();
             const f = builtins.functions.get(command);
             if (f) {
                 const r = await f(...tokens);
                 if (typeof r === "boolean") shouldExit = r;
                 else shouldExit = false;
-            } else {
+            } else if(command && tokens) {
                 const execstr: string = tokens.reduce((acc, x) => acc + " " + x, command);
                 execSync(execstr, {
                     stdio: [process.stdin, process.stdout, process.stderr],
